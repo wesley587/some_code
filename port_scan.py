@@ -3,23 +3,19 @@ from threading import Thread
 import argparse
 
 
-def connect(ip, port):
+def checking_port(host, port):
     s = socket(AF_INET, SOCK_STREAM)
     try:
-        s.connect((ip, int(port)))
-        print(f'{ip}/{port} -- open')
+        s.connect((host, int(port)))
+        print(f'{host}/{port} - Open')
     except:
-        print(f'{ip}/{port} -- closed')
+        pass
 
 
-parser = argparse.ArgumentParser()
-parser.add_argument('-i', required=True, action='store', dest='ip', help='')
-parser.add_argument('-p', required=True, action='append', dest='ports', help='', nargs='*')
-values = parser.parse_args()
-print(values)
-ports = values.ports
-
-for x in ports:
-    for port in x:
-        t = Thread(target=connect, args=(values.ip, port))
-        t.start()
+arguments = argparse.ArgumentParser()
+arguments.add_argument('-i', required=True, action='store', dest='ip', help='IP using to scan port')
+parse = arguments.parse_args()
+host = parse.ip
+for port in range(0, 65535):
+    t = Thread(target=checking_port, args=(host, port))
+    t.start()
