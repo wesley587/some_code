@@ -13,7 +13,7 @@ def checking_port(host, port):
 
 
 arguments = argparse.ArgumentParser()
-arguments.add_argument('-i', required=True, action='store', dest='ip', help='IP using to scan port')
+arguments.add_argument('-i', required=True, action='store', dest='ip', help='IP using to scan ports')
 parse = arguments.parse_args()
 host = parse.ip
 for port in range(0, 65535):
